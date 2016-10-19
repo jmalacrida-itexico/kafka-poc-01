@@ -46,13 +46,13 @@ class Consumer implements Runnable {
         }
 
         //consumer.subscribe(topic)       // REMOTE
-         consumer.subscribe([topic])  // LOCAL
+        consumer.subscribe([topic])  // LOCAL
 
         while (run) {
             ConsumerRecords<String, String> records = consumer.poll(200);
 
             //records.records().forEach({               //REMOTE
-                records.records(topic).forEach({    //LOCAL
+            records.records(topic).forEach({    //LOCAL
                 ConsumerRecord<String, String> record = it
                 try {
                     def jsonSlurper = new JsonSlurper()
@@ -65,15 +65,15 @@ class Consumer implements Runnable {
                             global.recordValue(latency)
                             break
                         case "marker":
-                            logger.info String.format("%d messages received in period, latency(min, max, avg, 99%%) = %d, %d, %.1f, %d (ms)%n",
+                            logger.info String.format("%d messages received in period, latency(min, max, avg, 99%%) = %d, %d, %.1f, %d (ms)",
                                     stats.getTotalCount(),
                                     stats.getValueAtPercentile(0), stats.getValueAtPercentile(100),
                                     stats.getMean(), stats.getValueAtPercentile(99))
-                            logger.info String.format("%d messages received overall, latency(min, max, avg, 99%%) = %d, %d, %.1f, %d (ms)%n",
+                            logger.info String.format("%d messages received overall, latency(min, max, avg, 99%%) = %d, %d, %.1f, %d (ms)",
                                     global.getTotalCount(),
                                     global.getValueAtPercentile(0), global.getValueAtPercentile(100),
                                     global.getMean(), global.getValueAtPercentile(99))
-
+                            logger.info message
                             stats.reset()
                             break
                         default:
@@ -87,7 +87,7 @@ class Consumer implements Runnable {
             })
         }
         //consumer.unsubscribe(topic) //REMOTE
-         consumer.unsubscribe() //LOCAL
+        consumer.unsubscribe() //LOCAL
         logger.info "bye"
     }
 

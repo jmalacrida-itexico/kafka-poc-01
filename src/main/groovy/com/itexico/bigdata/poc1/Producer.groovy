@@ -37,12 +37,12 @@ class Producer implements Runnable {
         }
 
         try {
-            for (int i = 0; run; i++) {
+            for (int i = 1; run; i++) {
                 producer.send(new ProducerRecord(topic, String.format("{\"type\":\"test\", \"t\":%.3f, \"k\":%d}", System.nanoTime() * 1e-9, i)))
 
                 if (i % 100 == 0) {
                     producer.send(new ProducerRecord(topic, String.format("{\"type\":\"marker\", \"t\":%.3f, \"k\":%d}", System.nanoTime() * 1e-9, i)))
-                    producer.send(new ProducerRecord(topic, String.format("{\"type\":\"other\", \"t\":%.3f, \"k\":%d}", System.nanoTime() * 1e-9, i)))
+                    //producer.send(new ProducerRecord(topic, String.format("{\"type\":\"other\", \"t\":%.3f, \"k\":%d}", System.nanoTime() * 1e-9, i)))
                     producer.flush()
                     logger.info "Sent msg number " + i
                 }

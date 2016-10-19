@@ -6,7 +6,7 @@ package com.itexico.bigdata.poc1
 class Poc1 {
     static void main(String[] args) {
 
-        def topic = "POC3"
+        def topic = "POC2"
 
         def producer = new Producer(topic: topic)
         def consumer = new Consumer(topic: topic)
