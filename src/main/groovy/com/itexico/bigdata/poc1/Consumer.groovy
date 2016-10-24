@@ -45,14 +45,12 @@ class Consumer implements Runnable {
             return
         }
 
-        //consumer.subscribe(topic)       // REMOTE
-        consumer.subscribe([topic])  // LOCAL
+        consumer.subscribe([topic])
 
         while (run) {
             ConsumerRecords<String, String> records = consumer.poll(200);
 
-            //records.records().forEach({               //REMOTE
-            records.records(topic).forEach({    //LOCAL
+            records.records(topic).forEach({
                 ConsumerRecord<String, String> record = it
                 try {
                     def jsonSlurper = new JsonSlurper()
@@ -86,8 +84,7 @@ class Consumer implements Runnable {
 
             })
         }
-        //consumer.unsubscribe(topic) //REMOTE
-        consumer.unsubscribe() //LOCAL
+        consumer.unsubscribe()
         logger.info "bye"
     }
 
